@@ -6,13 +6,13 @@ def cache(func: Callable) -> Callable:
     cache_data = {}
     @wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> Callable:
-        items = args
-        if items not in cache_data:
+        key = (args, tuple(sorted(kwargs.items())))
+
+        if key not in cache_data:
             print("Calculating new result")
-            cache_data[items] = func(*args, **kwargs)
-            return cache_data[items]
+            cache_data[key] = func(*args, **kwargs)
         else:
             print("Getting from cache")
-            return cache_data[items]
-    return wrapper
 
+        return cache_data[key]
+    return wrapper
