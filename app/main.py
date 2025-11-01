@@ -4,6 +4,7 @@ from functools import wraps
 
 def cache(func: Callable) -> Callable:
     cache_data = {}
+
     @wraps(func)
     def wrapper(*args: Any, **kwargs: Any) -> Any:
         try:
